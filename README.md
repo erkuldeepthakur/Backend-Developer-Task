@@ -107,6 +107,15 @@ Swagger Docs:
 http://localhost:5000/api-docs
 
 ---
+React Frontend
+      │
+      ▼
+Express REST API
+      │
+      ▼
+MongoDB Database
+
+---
 
 ## Database Schema
 
