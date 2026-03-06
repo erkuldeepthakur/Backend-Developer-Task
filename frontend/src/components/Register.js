@@ -1,36 +1,77 @@
-
-import {useState} from "react";
+import { useState } from "react";
 import api from "../api";
 
-export default function Register(){
+export default function Register() {
 
- const [form,setForm]=useState({});
+  const [form,setForm] = useState({
+    name:"",
+    email:"",
+    password:""
+  });
 
- const submit = async()=>{
+  const submit = async () => {
 
-  await api.post("/auth/register",form);
+    try{
 
-  alert("Registered");
+      await api.post("/auth/register",form);
 
- };
+      alert("Registered successfully");
 
- return(
- <div>
- <h2>Register</h2>
+      setForm({
+        name:"",
+        email:"",
+        password:""
+      });
 
- <input placeholder="name"
- onChange={e=>setForm({...form,name:e.target.value})}/>
+    }catch(err){
 
- <input placeholder="email"
- onChange={e=>setForm({...form,email:e.target.value})}/>
+      if(err.response){
+        alert(err.response.data.message);
+      }else{
+        alert("Server error");
+      }
 
- <input placeholder="password"
- type="password"
- onChange={e=>setForm({...form,password:e.target.value})}/>
+    }
 
- <button onClick={submit}>Register</button>
+  };
 
- </div>
- );
+  return (
+
+    <div style={{marginBottom:"30px"}}>
+
+      <h2>Register</h2>
+
+      <input
+      placeholder="Name"
+      value={form.name}
+      onChange={(e)=>setForm({...form,name:e.target.value})}
+      />
+
+      <br/><br/>
+
+      <input
+      placeholder="Email"
+      value={form.email}
+      onChange={(e)=>setForm({...form,email:e.target.value})}
+      />
+
+      <br/><br/>
+
+      <input
+      type="password"
+      placeholder="Password"
+      value={form.password}
+      onChange={(e)=>setForm({...form,password:e.target.value})}
+      />
+
+      <br/><br/>
+
+      <button onClick={submit}>
+        Register
+      </button>
+
+    </div>
+
+  );
 
 }
